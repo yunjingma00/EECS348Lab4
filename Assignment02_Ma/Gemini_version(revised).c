@@ -1,7 +1,7 @@
-#include <stdio.h> // Include functions for input and output.
-#include <stdlib.h> // Include functions for memory allocation.
-#include <string.h> // Include functions for string operations.
-#include <ctype.h> // Include functions for checking spaces.
+#include <stdio.h> //input and output.
+#include <stdlib.h> //memory allocation.
+#include <string.h> //string operations.
+#include <ctype.h> //checking spaces.
 
 #define INITIAL_CAPACITY 10 // Set the starting heap capacity.
 
@@ -14,14 +14,13 @@ typedef struct {
     long date_val; // Store the date as a number.
 } Email;
 
-// MaxHeap structure (List-based / Dynamic Array)
+// MaxHeap structure of the Dynamic Array)
 typedef struct {
     Email* data; // Store the emails in a dynamic array.
     int size; // Store the current number of emails.
     int capacity; // Store the current array capacity.
 } MaxHeap;
 
-// Function declarations
 MaxHeap* create_heap(); // Create a new heap.
 void free_heap(MaxHeap* heap); // Free the heap memory.
 int get_category_priority(const char* cat); // Get the priority of a category.
@@ -43,9 +42,9 @@ int main(int argc, char* argv[]) {
     // Check if an input file was provided.
     if (argc > 1) {
         file = fopen(argv[1], "r"); // Open the input file.
-        if (!file) { // Check if the file opened successfully.
-            perror("Error opening file"); // Print an error message.
-            return 1; // Stop the program if the file cannot be opened.
+        if (!file) {
+            perror("Error opening file"); //Raise an error if it's not the correct file.
+            return 1; //break
         }
     }
 
@@ -69,7 +68,7 @@ int main(int argc, char* argv[]) {
     return 0; // End the program successfully.
 }
 
-// Helper: Convert category to numerical priority
+//Convert category to numerical priority
 int get_category_priority(const char* cat) {
     if (strcmp(cat, "Boss") == 0) return 5; // Give Boss the highest priority.
     if (strcmp(cat, "Subordinate") == 0) return 4; // Give Subordinate priority 4.
@@ -79,11 +78,11 @@ int get_category_priority(const char* cat) {
     return 0; // Return 0 for an unknown category.
 }
 
-// Helper: Convert MM-DD-YYYY to a comparable integer YYYYMMDD
+//Convert MM-DD-YYYY to integer YYYYMMDD
 long parse_date(const char* date_str) {
-    int mm, dd, yyyy; // Store the month, day, and year.
+    int mm, dd, yyyy; // Store the month day and the  year.
 
-    // Read the month, day, and year from the date.
+    // Read from the date.
     if (sscanf(date_str, "%d-%d-%d", &mm, &dd, &yyyy) == 3) {
         return (long)yyyy * 10000 + mm * 100 + dd; // Convert the date to YYYYMMDD.
     }
@@ -91,16 +90,17 @@ long parse_date(const char* date_str) {
     return 0; // Return 0 if the date cannot be parsed.
 }
 
-// Compare two emails: returns 1 if 'a' has higher priority than 'b', 0 otherwise.
-// Higher category priority comes first. For the same category, newer date comes first.
-int compare_emails(Email a, Email b) {
+// Compare two emails priority
+// Higher category priority comes first.
+// if they have the same category, newer date comes first
+compare_emails(Email a, Email b) {
     // Check the sender priorities first.
     if (a.category_priority != b.category_priority) {
         return a.category_priority > b.category_priority; // Return 1 if a has higher priority.
     }
 
     // Newer date means larger date value.
-    return a.date_val > b.date_val; // Return 1 if a is newer.
+    return a.date_val > b.date_val; 
 }
 
 // Create heap
@@ -137,7 +137,7 @@ void free_heap(MaxHeap* heap) {
 
 // Swap two emails
 void swap(Email* a, Email* b) {
-    Email temp = *a; // Save the first email.
+    Email temp = *a;//get the temp as the teampary virable to switch the virable 
     *a = *b; // Put the second email into the first position.
     *b = temp; // Put the saved email into the second position.
 }
@@ -195,7 +195,7 @@ void insert_email(MaxHeap* heap, Email email) {
             printf("Memory allocation failed.\n"); // Print an error message.
             free(heap->data); // Free the old email array.
             free(heap); // Free the heap.
-            exit(1); // Stop the program.
+            exit(1); // break.
         }
 
         heap->data = temp; // Use the resized array.
